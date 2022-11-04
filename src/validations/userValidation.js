@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
-const authorModel = require("../models/authorModel");
-const {isValidBody , isValidField} = require("./commonValidation")
-
+const userModel = require("../models/userModel");
+const { isValidBody, isValidField } = require("./commonValidation");
 
 const isValidEmail = (email) =>
   /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/.test(email);
@@ -11,8 +10,8 @@ const isValidPassword = (password) =>
     password
   );
 
-// Validation for create author
-const validateCreateAuthor = async (req, res, next) => {
+// Validation for create user
+const validateCreateUser = async (req, res, next) => {
   try {
     const data = req.body;
     const { fName, lName, password } = data;
@@ -75,7 +74,7 @@ const validateCreateAuthor = async (req, res, next) => {
       });
     }
 
-    const existEmail = await authorModel.findOne({ email });
+    const existEmail = await userModel.findOne({ email });
     if (existEmail) {
       return res
         .status(400)
@@ -90,8 +89,8 @@ const validateCreateAuthor = async (req, res, next) => {
   next();
 };
 
-// Validation for login author
-const validateLoginAuthor = async (req, res, next) => {
+// Validation for login user
+const validateLoginUser = async (req, res, next) => {
   try {
     const data = req.body;
     if (!isValidBody(data)) {
@@ -123,19 +122,19 @@ const validateLoginAuthor = async (req, res, next) => {
       });
     }
 
-    const author = await authorModel.findOne({
+    const user = await userModel.findOne({
       email,
       password,
     });
 
-    // Send error if author not found
-    if (!author) {
+    // Send error if user not found
+    if (!user) {
       return res
         .status(400)
         .send({ status: false, message: "Invalid credentials" });
     }
 
-    req.headers.authorId = author._id.toString();
+    req.headers.userId = user._id.toString();
   } catch (error) {
     return res.status(500).send({
       status: false,
@@ -145,4 +144,4 @@ const validateLoginAuthor = async (req, res, next) => {
   next();
 };
 
-module.exports = { validateCreateAuthor, validateLoginAuthor };
+module.exports = { validateCreateUser, validateLoginUser };

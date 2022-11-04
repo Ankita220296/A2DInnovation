@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
-const Authentication = function (req, res, next) {
+const authentication = function (req, res, next) {
   try {
     let token = req.headers["x-api-key"] || req.headers["x-Api-key"];
     if (!token)
@@ -17,7 +17,7 @@ const Authentication = function (req, res, next) {
             : "Token is invalid";
         return res.status(401).send({ status: false, msg });
       }
-      req.headers["authorId"] = response.authorId;
+      req.headers["userId"] = response.userId;
       next();
     });
   } catch (err) {
@@ -25,4 +25,4 @@ const Authentication = function (req, res, next) {
   }
 };
 
-module.exports = { Authentication };
+module.exports = { authentication };

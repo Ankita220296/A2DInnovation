@@ -1,45 +1,48 @@
 const express = require("express");
 const router = express.Router();
-const authorController = require("../controllers/authorController");
-const postController = require("../controllers/postController");
+const userController = require("../controllers/userController");
+const bookController = require("../controllers/bookController");
 const auth = require("../middleware/auth");
-const authorValidation = require("../validations/authorValidation");
-const postValidation = require("../validations/postValidation");
+const userValidation = require("../validations/userValidation");
+const bookValidation = require("../validations/bookValidation");
 
-// .................................. Author end points ................................//
+// .................................. User end points ................................//
 router.post(
-  "/createAuthor",
-  authorValidation.validateCreateAuthor,
-  authorController.createAuthor
+  "/createUser",
+  userValidation.validateCreateUser,
+  userController.createUser
 );
 
 router.post(
   "/login",
-  authorValidation.validateLoginAuthor,
-  authorController.loginAuthor
+  userValidation.validateLoginUser,
+  userController.loginAUser
 );
 
-// .................................. Post end points ................................//
-router.post(
-  "/createPost",
-  auth.Authentication,
-  postValidation.validateCreatePost,
-  postController.createPost
-);
+// .................................. Book end points ................................//
+router.get("/getBooks", auth.authentication, bookController.getBooks);
+
+router.get("/getBook/:bookId", auth.authentication, bookController.getBookById);
 
 router.post(
-  "/likePost",
-  auth.Authentication,
-  postValidation.validateLikePost,
-  postController.likePost
+  "/createBook",
+  auth.authentication,
+  bookValidation.validateCreateBook,
+  bookController.createbook
 );
 
-router.get("/getPosts", auth.Authentication, postController.getPosts);
-
-router.get(
-  "/getAuthorsPosts",
-  auth.Authentication,
-  postController.getAuthorPosts
+router.put(
+  "/updateBook/:bookId",
+  auth.authentication,
+  bookValidation.validateUpdateBook,
+  bookController.updateBook
 );
 
+router.put("/issueBook/:bookId", auth.authentication, bookController.issueBook);
+
+router.delete(
+  "/deleteBook/:bookId",
+  auth.authentication,
+  bookController.deleteBook
+);
 module.exports = router;

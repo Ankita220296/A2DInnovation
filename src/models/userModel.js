@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
-//................................. Create author schema .........................//
-const authorSchema = new mongoose.Schema(
+//................................. Create user schema .........................//
+const userSchema = new mongoose.Schema(
   {
     fName: {
       type: String,
@@ -25,4 +25,4 @@ const authorSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Author", authorSchema);
+module.exports = mongoose.model("User", userSchema);

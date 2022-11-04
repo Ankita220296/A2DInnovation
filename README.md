@@ -1,4 +1,4 @@
-# Quokka Labs Test project
+# A2D test project
 
 Create a .env file in the `src` folder and set JWT_TOKEN.
 Please note : You can set any random value string to JWT_TOKEN as for now.
@@ -9,54 +9,58 @@ Please note : You can set any random value string to JWT_TOKEN as for now.
 - In the root folder run `npm install`
 - Go to src folder and run `node index.js`
 
-## Social Media Project Requirement
+## Library management project end points
 
-### POST /authors
+### POST /users
 
-- Create an author document from request body.
-- URL : /createAuthor
+- Create user document from request body
+- URL : /createUser
 - Type : POST
 - Params : fName, lName, email, password
 
-### POST /loginAuthor
+### POST /loginUser
 
-- Login an author.
+- Login user
 - URL : /login
 - Type : POST
 - Params : email, password
 
-### POST /Posts
+### POST /Book
 
-- Create a post document from request body.
-- URL : /createPost
+- Create a book document from request body.
+- URL : /createBook
 - Type : POST
-- Params : title, description, postImage
+- Params : title, description, userId, authorName , bookPrice , category
+  This API will take userId from JWT token
 
-Please note: Currently i don't have AWS account so i have commented amazon s3 code logic
+### GET /getBookById
 
-### POST /liKePost
-
-- Like a post.
-- URL : /likePost
-- Type : POST
-- Params : postId
-  This API will take authorId from JWT token
-
-### GET /getPosts
-
-- Get all posts.
-- URL : /getPosts
+- URL : /getBook/:bookId
 - Type : GET
 
-### GET /getAuthorsPosts
+### GET /getBooks
 
-- Get logged in author posts.
-- URL : /getAuthorsPosts
+- Get all books.
+- URL : /getBooks
 - Type : GET
-  This API will take authorId from JWT token
+
+### PUT /updateBook
+
+- URL : /updateBook/:bookId
+- Type : PUT
+
+  ### PUT /issueBook
+
+- URL : /issueBook/:bookId
+- Type : PUT
+
+  ### DELETE /deleteBook
+
+- URL : /deleteBook/:bookId
+- Type : DELETE
 
 ### Authentication
 
 - Authorisation has been implemented by using JWT token. It validates the token before every protected endpoint is called.
-- Protected routes are createPost, liKePost, getPosts, getAuthorsPosts
+- Protected routes are createBook, getBookByID, getBooks, updateBook, deleteBook, issueBook
 - Set the JWT token in the request - `x-api-key`: jwt_token
